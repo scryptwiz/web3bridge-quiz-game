@@ -1,0 +1,72 @@
+[
+    {
+        "question": "What does HTML stand for?",
+        "answers": [
+            "Home Tool Markup Language",
+            "HyperText Markup Language",
+            "Hyperlinks and Text Markup Language",
+            "HyperText Machine Language"
+        ],
+        "correct": 1
+    },
+    {
+        "question": "Which CSS property is used to change the text color?",
+        "answers": ["text-color", "color", "font-color", "text-style"],
+        "correct": 1
+    },
+    {
+        "question": "What is the correct way to create a function in JavaScript?",
+        "answers": [
+            "create myFunction() {}",
+            "function = myFunction() {}",
+            "function myFunction() {}",
+            "def myFunction() {}"
+        ],
+        "correct": 2
+    },
+    {
+        "question": "Which of the following is NOT a JavaScript data type?",
+        "answers": ["String", "Float", "Boolean", "Undefined"],
+        "correct": 1
+    },
+    {
+        "question": "What does CSS stand for?",
+        "answers": [
+            "Creative Style Sheets",
+            "Computer Style Sheets",
+            "Cascading Style Sheets",
+            "Colorful Style Sheets"
+        ],
+        "correct": 2
+    },
+    {
+        "question": "Which HTML tag is used to link external CSS?",
+        "answers": ["<link>", "<style>", "<css>", "<stylesheet>"],
+        "correct": 0
+    },
+    {
+        "question": "What is the correct syntax for a comment in JavaScript?",
+        "answers": ["# comment", "// comment", "<!-- comment -->", "/* comment"],
+        "correct": 1
+    },
+    {
+        "question": "Which method is used to add an element to the end of an array?",
+        "answers": ["add()", "append()", "push()", "insert()"],
+        "correct": 2
+    },
+    {
+        "question": "What is the box model in CSS?",
+        "answers": [
+            "Width, Height, Color, Font",
+            "Content, Padding, Border, Margin",
+            "HTML, CSS, JavaScript",
+            "Header, Body, Footer"
+        ],
+        "correct": 1
+    },
+    {
+        "question": "Which of these is a semantic HTML5 element?",
+        "answers": ["<div>", "<section>", "<span>", "<b>"],
+        "correct": 1
+    }
+]

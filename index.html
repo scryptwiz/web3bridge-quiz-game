@@ -1,384 +1,379 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">    <title>Quiz Game - Web3Bridge Challenge</title>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-    <link href="styles.css" rel="stylesheet">
-</head>
-<body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Quiz Game - Web3Bridge Challenge</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" />
+    <link href="styles.css" rel="stylesheet" />
+  </head>
+  <body>
     <div class="container">
-        <!-- Start Screen -->        <div id="startScreen" class="row justify-content-center">
-            <div class="col-md-8">
-                <div class="quiz-container">
-                    <div class="card-body text-center fade-in">
-                        <h1 class="card-title">
-                            <i class="fas fa-brain text-primary"></i> Quiz Challenge
-                        </h1>
-                        <p class="card-text">Test your knowledge across various topics!</p>
-                        
-                        <div class="row mb-4">
-                            <div class="col-md-4">
-                                <div class="card">
-                                    <div class="card-body">
-                                        <i class="fas fa-question-circle text-primary fs-2"></i>
-                                        <h5 class="mt-2">10 Questions</h5>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="card">
-                                    <div class="card-body">
-                                        <i class="fas fa-clock text-warning fs-2"></i>
-                                        <h5 class="mt-2">30s per Question</h5>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="card">
-                                    <div class="card-body">
-                                        <i class="fas fa-trophy text-success fs-2"></i>
-                                        <h5 class="mt-2">Beat the Best!</h5>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <button id="startBtn" class="btn btn-primary btn-lg">
-                            <i class="fas fa-play"></i> Start Quiz
-                        </button>
+      <!-- Start Screen -->
+      <div id="startScreen" class="row justify-content-center">
+        <div class="col-md-8">
+          <div class="quiz-container">
+            <div class="card-body text-center fade-in">
+              <h1 class="card-title"><i class="fas fa-brain text-primary"></i> Quiz Challenge</h1>
+              <p class="card-text">Test your knowledge across various topics!</p>
+
+              <div class="row mb-4">
+                <div class="col-md-4">
+                  <div class="card">
+                    <div class="card-body">
+                      <i class="fas fa-question-circle text-primary fs-2"></i>
+                      <h5 class="mt-2">10 Questions</h5>
                     </div>
+                  </div>
                 </div>
-            </div>
-        </div>
-
-        <!-- Game Screen -->        <div id="gameScreen" class="row justify-content-center d-none">
-            <div class="col-md-8">
-                <div class="quiz-container">
-                    <div class="card-body fade-in">
-                        <!-- Progress and Timer -->
-                        <div class="d-flex justify-content-between align-items-center mb-3">
-                            <div class="flex-grow-1 me-3">
-                                <div class="progress">
-                                    <div id="progressBar" class="progress-bar bg-success" style="width: 0%"></div>
-                                </div>
-                                <small class="text-muted">Question <span id="currentQ">1</span> of <span id="totalQ">10</span></small>
-                            </div>
-                            <div class="fw-bold text-danger">
-                                <i class="fas fa-stopwatch"></i> <span id="timeLeft">30</span>s
-                            </div>
-                        </div>                        <!-- Score Display -->
-                        <div class="score-display text-center">
-                            <h5 class="mb-0">
-                                <i class="fas fa-star"></i> Score: <span id="currentScore">0</span>
-                            </h5>
-                        </div><!-- Question Card -->
-                        <div class="question-card mb-3">
-                            <div class="card-body">
-                                <h3 id="questionText" class="mb-4">Loading question...</h3>
-                                <div id="answersContainer">
-                                    <!-- Answer buttons will be inserted here -->
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Feedback -->
-                        <div id="feedback" class="alert d-none" role="alert"></div>
-
-                        <!-- Next Button -->
-                        <div class="text-center">
-                            <button id="nextBtn" class="btn btn-success btn-lg d-none">
-                                Next Question <i class="fas fa-arrow-right"></i>
-                            </button>
-                        </div>
+                <div class="col-md-4">
+                  <div class="card">
+                    <div class="card-body">
+                      <i class="fas fa-clock text-warning fs-2"></i>
+                      <h5 class="mt-2">30s per Question</h5>
                     </div>
+                  </div>
                 </div>
-            </div>
-        </div>
-
-        <!-- End Screen -->        <div id="endScreen" class="row justify-content-center d-none">
-            <div class="col-md-8">
-                <div class="quiz-container">
-                    <div class="card-body text-center fade-in">
-                        <h1 class="card-title text-success">
-                            <i class="fas fa-trophy"></i> Quiz Complete!
-                        </h1>
-                        
-                        <div class="alert alert-success mb-4">
-                            <h2>Final Score: <span id="finalScore">0</span> / <span id="totalPoints">100</span></h2>
-                            <p class="mb-0" id="scoreMessage">Great job!</p>
-                        </div>                        <div class="game-stats mb-4">
-                            <div class="stat-card">
-                                <i class="fas fa-check-circle text-success fs-2"></i>
-                                <h5 class="mt-2">Correct</h5>
-                                <h3 id="correctCount">0</h3>
-                            </div>
-                            <div class="stat-card">
-                                <i class="fas fa-times-circle text-danger fs-2"></i>
-                                <h5 class="mt-2">Incorrect</h5>
-                                <h3 id="incorrectCount">0</h3>
-                            </div>
-                            <div class="stat-card">
-                                <i class="fas fa-percentage text-primary fs-2"></i>
-                                <h5 class="mt-2">Accuracy</h5>
-                                <h3 id="accuracy">0%</h3>
-                            </div>
-                        </div>                        <div class="mt-4">
-                            <button id="restartBtn" class="btn btn-primary btn-lg">
-                                <i class="fas fa-redo"></i> Play Again
-                            </button>
-                        </div>
+                <div class="col-md-4">
+                  <div class="card">
+                    <div class="card-body">
+                      <i class="fas fa-trophy text-success fs-2"></i>
+                      <h5 class="mt-2">Beat the Best!</h5>
                     </div>
+                  </div>
                 </div>
-            </div>
-        </div>
+              </div>
 
-        <!-- Error Screen -->        <div id="errorScreen" class="row justify-content-center d-none">
-            <div class="col-md-8">
-                <div class="quiz-container">
-                    <div class="card-body text-center fade-in">
-                        <div class="alert alert-danger">
-                            <h4><i class="fas fa-exclamation-triangle"></i> Oops!</h4>
-                            <p id="errorMessage">Something went wrong loading the quiz.</p>
-                            <button id="retryBtn" class="btn btn-danger">
-                                <i class="fas fa-refresh"></i> Try Again
-                            </button>
-                        </div>
-                    </div>
+              <button id="startBtn" class="btn btn-primary btn-lg"><i class="fas fa-play"></i> Start Quiz</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Game Screen -->
+      <div id="gameScreen" class="row justify-content-center d-none">
+        <div class="col-md-8">
+          <div class="quiz-container">
+            <div class="card-body fade-in">
+              <!-- Progress and Timer -->
+              <div class="d-flex justify-content-between align-items-center mb-3">
+                <div class="flex-grow-1 me-3">
+                  <div class="progress">
+                    <div id="progressBar" class="progress-bar bg-success" style="width: 0%"></div>
+                  </div>
+                  <small class="text-muted">Question <span id="currentQ">1</span> of <span id="totalQ">10</span></small>
                 </div>
-            </div>
-        </div>
-    </div>    <script>
-        // Game state variables
-        let questions = [];
-        let currentQuestionIndex = 0;
-        let score = 0;
-        let timeLeft = 30;
-        let timer = null;
-        let correctAnswers = 0;
-        let incorrectAnswers = 0;
-        let gameActive = false;
+                <div class="fw-bold text-danger"><i class="fas fa-stopwatch"></i> <span id="timeLeft">30</span>s</div>
+              </div>
+              <!-- Score Display -->
+              <div class="score-display text-center">
+                <h5 class="mb-0"><i class="fas fa-star"></i> Score: <span id="currentScore">0</span></h5>
+              </div>
+              <!-- Question Card -->
+              <div class="question-card mb-3">
+                <div class="card-body">
+                  <h3 id="questionText" class="mb-4">Loading question...</h3>
+                  <div id="answersContainer">
+                    <!-- Answer buttons will be inserted here -->
+                  </div>
+                </div>
+              </div>
 
-        // Screen management functions
-        function showScreen(screenId) {
-            const screens = ['startScreen', 'gameScreen', 'endScreen', 'errorScreen'];
-            screens.forEach(id => {
-                document.getElementById(id).classList.add('d-none');
-            });
-            document.getElementById(screenId).classList.remove('d-none');
+              <!-- Feedback -->
+              <div id="feedback" class="alert d-none" role="alert"></div>
+
+              <!-- Next Button -->
+              <div class="text-center">
+                <button id="nextBtn" class="btn btn-success btn-lg d-none">Next Question <i class="fas fa-arrow-right"></i></button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- End Screen -->
+      <div id="endScreen" class="row justify-content-center d-none">
+        <div class="col-md-8">
+          <div class="quiz-container">
+            <div class="card-body text-center fade-in">
+              <h1 class="card-title text-success"><i class="fas fa-trophy"></i> Quiz Complete!</h1>
+
+              <div class="alert alert-success mb-4">
+                <h2>Final Score: <span id="finalScore">0</span> / <span id="totalPoints">100</span></h2>
+                <p class="mb-0" id="scoreMessage">Great job!</p>
+              </div>
+              <div class="game-stats mb-4">
+                <div class="stat-card">
+                  <i class="fas fa-check-circle text-success fs-2"></i>
+                  <h5 class="mt-2">Correct</h5>
+                  <h3 id="correctCount">0</h3>
+                </div>
+                <div class="stat-card">
+                  <i class="fas fa-times-circle text-danger fs-2"></i>
+                  <h5 class="mt-2">Incorrect</h5>
+                  <h3 id="incorrectCount">0</h3>
+                </div>
+                <div class="stat-card">
+                  <i class="fas fa-percentage text-primary fs-2"></i>
+                  <h5 class="mt-2">Accuracy</h5>
+                  <h3 id="accuracy">0%</h3>
+                </div>
+              </div>
+              <div class="mt-4">
+                <button id="restartBtn" class="btn btn-primary btn-lg"><i class="fas fa-redo"></i> Play Again</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Error Screen -->
+      <div id="errorScreen" class="row justify-content-center d-none">
+        <div class="col-md-8">
+          <div class="quiz-container">
+            <div class="card-body text-center fade-in">
+              <div class="alert alert-danger">
+                <h4><i class="fas fa-exclamation-triangle"></i> Oops!</h4>
+                <p id="errorMessage">Something went wrong loading the quiz.</p>
+                <button id="retryBtn" class="btn btn-danger"><i class="fas fa-refresh"></i> Try Again</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script>
+      // Game state variables
+      let questions = [];
+      let currentQuestionIndex = 0;
+      let score = 0;
+      let timeLeft = 30;
+      let timer = null;
+      let correctAnswers = 0;
+      let incorrectAnswers = 0;
+      let gameActive = false;
+
+      // Screen management functions
+      function showScreen(screenId) {
+        const screens = ["startScreen", "gameScreen", "endScreen", "errorScreen"];
+        screens.forEach((id) => {
+          document.getElementById(id).classList.add("d-none");
+        });
+        document.getElementById(screenId).classList.remove("d-none");
+      }
+
+      // Load questions from JSON file
+      async function loadQuestions() {
+        try {
+          const response = await fetch("questions.json");
+          if (!response.ok) {
+            throw new Error("Failed to load questions");
+          }
+          questions = await response.json();
+          console.log("Questions loaded:", questions.length);
+          return true;
+        } catch (error) {
+          console.error("Error loading questions:", error);
+          document.getElementById("errorMessage").textContent = "Failed to load quiz questions. Please check your connection and try again.";
+          showScreen("errorScreen");
+          return false;
+        }
+      }
+
+      // Initialize game
+      function initGame() {
+        currentQuestionIndex = 0;
+        score = 0;
+        correctAnswers = 0;
+        incorrectAnswers = 0;
+        gameActive = true;
+
+        // Update UI
+        document.getElementById("currentScore").textContent = "0";
+        document.getElementById("totalQ").textContent = questions.length;
+
+        // Start first question
+        loadQuestion();
+      }
+
+      // Load current question
+      function loadQuestion() {
+        if (currentQuestionIndex >= questions.length) {
+          endGame();
+          return;
         }
 
-        // Load questions from JSON file
-        async function loadQuestions() {
-            try {
-                const response = await fetch('questions.json');
-                if (!response.ok) {
-                    throw new Error('Failed to load questions');
-                }
-                questions = await response.json();
-                console.log('Questions loaded:', questions.length);
-                return true;
-            } catch (error) {
-                console.error('Error loading questions:', error);
-                document.getElementById('errorMessage').textContent = 'Failed to load quiz questions. Please check your connection and try again.';
-                showScreen('errorScreen');
-                return false;
-            }
-        }
+        const question = questions[currentQuestionIndex];
+        timeLeft = 30;
 
-        // Initialize game
-        function initGame() {
-            currentQuestionIndex = 0;
-            score = 0;
-            correctAnswers = 0;
-            incorrectAnswers = 0;
-            gameActive = true;
-            
-            // Update UI
-            document.getElementById('currentScore').textContent = '0';
-            document.getElementById('totalQ').textContent = questions.length;
-            
-            // Start first question
-            loadQuestion();
-        }
+        // Update progress
+        const progress = (currentQuestionIndex / questions.length) * 100;
+        document.getElementById("progressBar").style.width = progress + "%";
+        document.getElementById("currentQ").textContent = currentQuestionIndex + 1;
 
-        // Load current question
-        function loadQuestion() {
-            if (currentQuestionIndex >= questions.length) {
-                endGame();
-                return;
-            }
+        // Update question
+        document.getElementById("questionText").textContent = question.question;
 
-            const question = questions[currentQuestionIndex];
-            timeLeft = 30;
-            
-            // Update progress
-            const progress = ((currentQuestionIndex) / questions.length) * 100;
-            document.getElementById('progressBar').style.width = progress + '%';
-            document.getElementById('currentQ').textContent = currentQuestionIndex + 1;
-            
-            // Update question
-            document.getElementById('questionText').textContent = question.question;
-            
-            // Update answers
-            const answersContainer = document.getElementById('answersContainer');
-            answersContainer.innerHTML = '';
-            
-            question.answers.forEach((answer, index) => {
-                const button = document.createElement('button');
-                button.className = 'btn btn-outline-primary btn-lg w-100 mb-2 answer-btn';
-                button.textContent = answer;
-                button.onclick = () => selectAnswer(index);
-                answersContainer.appendChild(button);
-            });
-            
-            // Hide feedback and next button
-            document.getElementById('feedback').classList.add('d-none');
-            document.getElementById('nextBtn').classList.add('d-none');
-            
-            // Start timer
-            startTimer();
-        }
+        // Update answers
+        const answersContainer = document.getElementById("answersContainer");
+        answersContainer.innerHTML = "";
 
-        // Start countdown timer
-        function startTimer() {
+        question.answers.forEach((answer, index) => {
+          const button = document.createElement("button");
+          button.className = "btn btn-outline-primary btn-lg w-100 mb-2 answer-btn";
+          button.textContent = answer;
+          button.onclick = () => selectAnswer(index);
+          answersContainer.appendChild(button);
+        });
+
+        // Hide feedback and next button
+        document.getElementById("feedback").classList.add("d-none");
+        document.getElementById("nextBtn").classList.add("d-none");
+
+        // Start timer
+        startTimer();
+      }
+
+      // Start countdown timer
+      function startTimer() {
+        clearInterval(timer);
+        updateTimerDisplay();
+
+        timer = setInterval(() => {
+          timeLeft--;
+          updateTimerDisplay();
+
+          if (timeLeft <= 0) {
             clearInterval(timer);
-            updateTimerDisplay();
-            
-            timer = setInterval(() => {
-                timeLeft--;
-                updateTimerDisplay();
-                
-                if (timeLeft <= 0) {
-                    clearInterval(timer);
-                    selectAnswer(-1); // Time's up, no answer selected
-                }
-            }, 1000);
-        }
+            selectAnswer(-1);
+          }
+        }, 1000);
+      }
 
-        // Update timer display
-        function updateTimerDisplay() {
-            document.getElementById('timeLeft').textContent = timeLeft;
-            const timerElement = document.getElementById('timeLeft').parentElement;
-            
-            if (timeLeft <= 10) {
-                timerElement.className = 'fw-bold text-danger';
-            } else if (timeLeft <= 20) {
-                timerElement.className = 'fw-bold text-warning';
-            } else {
-                timerElement.className = 'fw-bold text-success';
-            }
-        }
+      // Update timer display
+      function updateTimerDisplay() {
+        document.getElementById("timeLeft").textContent = timeLeft;
+        const timerElement = document.getElementById("timeLeft").parentElement;
 
-        // Handle answer selection
-        function selectAnswer(selectedIndex) {
-            if (!gameActive) return;
-            
-            clearInterval(timer);
-            gameActive = false;
-            
-            const question = questions[currentQuestionIndex];
-            const correctIndex = question.correct;
-            const isCorrect = selectedIndex === correctIndex;
-            
-            // Disable all answer buttons
-            const answerButtons = document.querySelectorAll('.answer-btn');
-            answerButtons.forEach((btn, index) => {
-                btn.disabled = true;
-                
-                if (index === correctIndex) {
-                    btn.className = 'btn btn-success btn-lg w-100 mb-2 answer-btn';
-                } else if (index === selectedIndex && !isCorrect) {
-                    btn.className = 'btn btn-danger btn-lg w-100 mb-2 answer-btn';
-                } else {
-                    btn.className = 'btn btn-outline-secondary btn-lg w-100 mb-2 answer-btn';
-                }
-            });
-            
-            // Show feedback
-            const feedback = document.getElementById('feedback');
-            if (selectedIndex === -1) {
-                feedback.className = 'alert alert-warning';
-                feedback.innerHTML = '<i class="fas fa-clock"></i> Time\'s up! The correct answer was: <strong>' + question.answers[correctIndex] + '</strong>';
-                incorrectAnswers++;
-            } else if (isCorrect) {
-                feedback.className = 'alert alert-success';
-                feedback.innerHTML = '<i class="fas fa-check-circle"></i> Correct! Well done!';
-                score += 10;
-                correctAnswers++;
-                document.getElementById('currentScore').textContent = score;
-            } else {
-                feedback.className = 'alert alert-danger';
-                feedback.innerHTML = '<i class="fas fa-times-circle"></i> Incorrect. The correct answer was: <strong>' + question.answers[correctIndex] + '</strong>';
-                incorrectAnswers++;
-            }
-            
-            feedback.classList.remove('d-none');
-            
-            // Show next button or finish
-            currentQuestionIndex++;
-            if (currentQuestionIndex < questions.length) {
-                document.getElementById('nextBtn').classList.remove('d-none');
-            } else {
-                setTimeout(() => {
-                    endGame();
-                }, 2000);
-            }
+        if (timeLeft <= 10) {
+          timerElement.className = "fw-bold text-danger";
+        } else if (timeLeft <= 20) {
+          timerElement.className = "fw-bold text-warning";
+        } else {
+          timerElement.className = "fw-bold text-success";
         }
+      }
 
-        // End the game
-        function endGame() {
-            showScreen('endScreen');
-            
-            // Update final scores
-            const totalQuestions = questions.length;
-            const accuracy = Math.round((correctAnswers / totalQuestions) * 100);
-            
-            document.getElementById('finalScore').textContent = score;
-            document.getElementById('totalPoints').textContent = totalQuestions * 10;
-            document.getElementById('correctCount').textContent = correctAnswers;
-            document.getElementById('incorrectCount').textContent = incorrectAnswers;
-            document.getElementById('accuracy').textContent = accuracy + '%';
-            
-            // Set score message
-            let message = '';
-            if (accuracy >= 90) {
-                message = 'Outstanding! You\'re a quiz master! 🏆';
-            } else if (accuracy >= 80) {
-                message = 'Excellent work! Great knowledge! 🌟';
-            } else if (accuracy >= 70) {
-                message = 'Good job! Keep learning! 👍';
-            } else if (accuracy >= 60) {
-                message = 'Not bad! Room for improvement! 📚';
-            } else {
-                message = 'Keep studying and try again! 💪';
-            }
-            
-            document.getElementById('scoreMessage').textContent = message;
-        }
+      // Handle answer selection
+      function selectAnswer(selectedIndex) {
+        if (!gameActive) return;
 
-        // Event listeners
-        document.getElementById('startBtn').addEventListener('click', async function() {
-            const loaded = await loadQuestions();
-            if (loaded) {
-                showScreen('gameScreen');
-                initGame();
-            }
+        clearInterval(timer);
+        gameActive = false;
+
+        const question = questions[currentQuestionIndex];
+        const correctIndex = question.correct;
+        const isCorrect = selectedIndex === correctIndex;
+
+        // Disable all answer buttons
+        const answerButtons = document.querySelectorAll(".answer-btn");
+        answerButtons.forEach((btn, index) => {
+          btn.disabled = true;
+
+          if (index === correctIndex) {
+            btn.className = "btn btn-success btn-lg w-100 mb-2 answer-btn";
+          } else if (index === selectedIndex && !isCorrect) {
+            btn.className = "btn btn-danger btn-lg w-100 mb-2 answer-btn";
+          } else {
+            btn.className = "btn btn-outline-secondary btn-lg w-100 mb-2 answer-btn";
+          }
         });
 
-        document.getElementById('nextBtn').addEventListener('click', function() {
-            gameActive = true;
-            loadQuestion();
-        });
+        // Show feedback
+        const feedback = document.getElementById("feedback");
+        if (selectedIndex === -1) {
+          feedback.className = "alert alert-warning";
+          feedback.innerHTML = '<i class="fas fa-clock"></i> Time\'s up! The correct answer was: <strong>' + question.answers[correctIndex] + "</strong>";
+          incorrectAnswers++;
+        } else if (isCorrect) {
+          feedback.className = "alert alert-success";
+          feedback.innerHTML = '<i class="fas fa-check-circle"></i> Correct! Well done!';
+          score += 10;
+          correctAnswers++;
+          document.getElementById("currentScore").textContent = score;
+        } else {
+          feedback.className = "alert alert-danger";
+          feedback.innerHTML = '<i class="fas fa-times-circle"></i> Incorrect. The correct answer was: <strong>' + question.answers[correctIndex] + "</strong>";
+          incorrectAnswers++;
+        }
 
-        document.getElementById('restartBtn').addEventListener('click', function() {
-            showScreen('startScreen');
-        });        document.getElementById('retryBtn').addEventListener('click', function() {
-            showScreen('startScreen');
-        });
+        feedback.classList.remove("d-none");
 
-        console.log('Quiz Game initialized');
+        // Show next button or finish
+        currentQuestionIndex++;
+        if (currentQuestionIndex < questions.length) {
+          document.getElementById("nextBtn").classList.remove("d-none");
+        } else {
+          setTimeout(() => {
+            endGame();
+          }, 2000);
+        }
+      }
+
+      // End the game
+      function endGame() {
+        showScreen("endScreen");
+
+        // Update final scores
+        const totalQuestions = questions.length;
+        const accuracy = Math.round((correctAnswers / totalQuestions) * 100);
+
+        document.getElementById("finalScore").textContent = score;
+        document.getElementById("totalPoints").textContent = totalQuestions * 10;
+        document.getElementById("correctCount").textContent = correctAnswers;
+        document.getElementById("incorrectCount").textContent = incorrectAnswers;
+        document.getElementById("accuracy").textContent = accuracy + "%";
+
+        // Set score message
+        let message = "";
+        if (accuracy >= 90) {
+          message = "Outstanding! You're a quiz master! 🏆";
+        } else if (accuracy >= 80) {
+          message = "Excellent work! Great knowledge! 🌟";
+        } else if (accuracy >= 70) {
+          message = "Good job! Keep learning! 👍";
+        } else if (accuracy >= 60) {
+          message = "Not bad! Room for improvement! 📚";
+        } else {
+          message = "Keep studying and try again! 💪";
+        }
+
+        document.getElementById("scoreMessage").textContent = message;
+      }
+
+      // Event listeners
+      document.getElementById("startBtn").addEventListener("click", async function () {
+        const loaded = await loadQuestions();
+        if (loaded) {
+          showScreen("gameScreen");
+          initGame();
+        }
+      });
+
+      document.getElementById("nextBtn").addEventListener("click", function () {
+        gameActive = true;
+        loadQuestion();
+      });
+
+      document.getElementById("restartBtn").addEventListener("click", function () {
+        showScreen("startScreen");
+      });
+      document.getElementById("retryBtn").addEventListener("click", function () {
+        showScreen("startScreen");
+      });
+
+      console.log("Quiz Game initialized");
     </script>
-</body>
+  </body>
 </html>

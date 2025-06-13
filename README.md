@@ -141,7 +141,7 @@ Want to improve the quiz game? Here's how you can contribute:
 
 ## 📄 License
 
-This project is open source and available under the [MIT License](LICENSE).
+This project is not licensed. All rights reserved.
 
 ## 👨‍💻 Author
 
